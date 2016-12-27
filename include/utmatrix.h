@@ -60,7 +60,7 @@ class TVector {
 template <class ValType>
 TVector<ValType>::TVector(int s, int si) {
     if (( s < 0 ) || ( si < 0 ) || ( s > MAX_VECTOR_SIZE ))
-        throw 1;
+        throw std::logic_error("");
     pVector = new ValType[s];
     Size = s;
     StartIndex = si;
@@ -85,7 +85,7 @@ TVector<ValType>::~TVector() {
 template <class ValType>  // доступ
 ValType& TVector<ValType>::operator[](int pos) {
     if ( ( pos < 0) || ( pos < StartIndex) || ( pos > (StartIndex+Size-1) ) )
-        throw 1;
+        throw std::logic_error("");
     return pVector[pos-StartIndex];
 } /*-------------------------------------------------------------------------*/
 
@@ -151,7 +151,7 @@ TVector<ValType> TVector<ValType>::operator*(const ValType &val) {
 template <class ValType>  // сложение
 TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v) {
     if ( Size != v.Size )
-        throw 1;
+        throw std::logic_error("");
     TVector temp(Size, StartIndex);
     for ( int i=0; i < Size; i++ )
         temp.pVector[i] = pVector[i] + v.pVector[i];
@@ -161,7 +161,7 @@ TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v) {
 template <class ValType>  // вычитание
 TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v) {
     if ( Size != v.Size )
-        throw 1;
+        throw std::logic_error("");
     TVector temp(Size, StartIndex);
     for ( int i=0; i < Size; i++ )
         temp.pVector[i] = pVector[i] - v.pVector[i];
@@ -171,7 +171,7 @@ TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v) {
 template <class ValType>  // скалярное произведение
 ValType TVector<ValType>::operator*(const TVector<ValType> &v) {
     if ( Size != v.Size )
-        throw 1;
+        throw std::logic_error("");
     ValType res = 0;
     for ( int i=0; i < Size; i++ )
         res += pVector[i] * v.pVector[i];
@@ -208,7 +208,7 @@ class TMatrix : public TVector<TVector<ValType> > {
 template <class ValType>
 TMatrix<ValType>::TMatrix(int s): TVector<TVector<ValType> >(s) {
     if  ( s > MAX_MATRIX_SIZE )
-        throw 1;
+        throw std::logic_error("");
     for ( int i=0; i < s; i++ )
         pVector[i] = TVector<ValType>(s-i, i);
 } /*-------------------------------------------------------------------------*/
@@ -259,7 +259,7 @@ TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType> &mt) {
 template <class ValType>  // сложение
 TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType> &mt) {
     if ( Size != mt.Size )
-        throw 1;
+        throw std::logic_error("");
     TMatrix<ValType> temp(Size);
     for ( int i=0; i < Size; i++ )
         temp.pVector[i] = pVector[i] + mt.pVector[i];
@@ -269,7 +269,7 @@ TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType> &mt) {
 template <class ValType>  // вычитание
 TMatrix<ValType> TMatrix<ValType>::operator-(const TMatrix<ValType> &mt) {
     if ( Size != mt.Size )
-        throw 1;
+        throw std::logic_error("");
     TMatrix<ValType> temp(Size);
     for ( int i = 0; i < Size; i++ )
         temp.pVector[i] = pVector[i] - mt.pVector[i];
